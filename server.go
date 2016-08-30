@@ -8,6 +8,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/ka-le/doticos-api/controllers"
 	"gopkg.in/mgo.v2"
+	"os"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 	r.DELETE("/user/:id", uc.RemoveUser)
 
 	// Fire up the server
-	http.ListenAndServe("localhost:8080", r)
+	http.ListenAndServe(":"+os.Getenv("PORT"), r)
 }
 
 // getSession creates a new mongo session and panics if connection error occurs
