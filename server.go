@@ -1,12 +1,9 @@
 package main
 
 import (
-	// Standard library packages
 	"net/http"
 
-	// Third party packages
 	"github.com/julienschmidt/httprouter"
-	"github.com/ka-le/doticos-api/controllers"
 	"gopkg.in/mgo.v2"
 )
 
@@ -14,19 +11,17 @@ func main() {
 	// Instantiate a new router
 	r := httprouter.New()
 
-	// Get a UserController instance
-	uc := controllers.NewUserController(getSession())
-	pc := controllers.NewPlayerController()
+	mongoSession := getSession()
 
-	r.GET("/player/:accountId", pc.GetPlayerInfo)
+	r.GET("/player/:accountId", getPlayerInfoHandler)
 	// Get a user resource
-	r.GET("/user/:id", uc.GetUser)
+	r.GET("/user/:id", newGetUserHandler(mongoSession))
 
 	// Create a new user
-	r.POST("/user", uc.CreateUser)
+	r.POST("/user", newCreateUserHandler(mongoSession))
 
 	// Remove an existing user
-	r.DELETE("/user/:id", uc.RemoveUser)
+	r.DELETE("/user/:id", newRemoveUserHandler(mongoSession))
 
 	// Fire up the server
 	http.ListenAndServe("localhost:8080", r)
