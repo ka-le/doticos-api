@@ -3,3 +3,6 @@ deployment:
     branch: master
     heroku:
       appname: doticos-v2-api
+dependencies:
+  post:
+    - godep save -v
