@@ -1,1 +1,1 @@
-web: demoapp
+web: doticos-api
