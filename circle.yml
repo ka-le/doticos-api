@@ -5,4 +5,5 @@ deployment:
       appname: doticos-v2-api
 dependencies:
   post:
+    - go get -u github.com/tools/godep
     - godep save -v
